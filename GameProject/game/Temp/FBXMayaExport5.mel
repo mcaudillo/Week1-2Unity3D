@@ -1,0 +1,23 @@
+print "Starting maya loading and fbx conversion \n";
+	
+if (`file -q -exists "/Users/bismolin6/Week1&2Unity3D/GameProject/game/Assets/verde.ma"`)
+{		
+	file -o "/Users/bismolin6/Week1&2Unity3D/GameProject/game/Assets/verde.ma";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "/Users/bismolin6/Week1&2Unity3D/GameProject/game/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+
+system ("rm \"/Users/bismolin6/Week1&2Unity3D/GameProject/game/Temp/CommandPipe\"");
+
+$donepipeKill = `fopen "/Users/bismolin6/Week1&2Unity3D/GameProject/game/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
